@@ -17,7 +17,6 @@ RUN cd /etc/apache2/sites-available && a2dissite --quiet * \
 # Use the default production php configuration
 RUN mv "${PHP_INI_DIR}/php.ini-production" "${PHP_INI_DIR}/php.ini"
 RUN sed -i 's/expose_php = On/expose_php = Off/g' ${PHP_INI_DIR}/php.ini
-RUN sed -i 's/expose_php = On/expose_php = Off/g' ${PHP_INI_DIR}/php.ini
 
 # php extensions install
 RUN docker-php-ext-install \
