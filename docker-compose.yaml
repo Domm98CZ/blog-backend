@@ -1,0 +1,8 @@
+services:
+    app:
+        build: resources/docker
+        container_name: backend
+        ports:
+            - 8080:80
+        volumes:
+            - .:/var/www/app
