@@ -24,6 +24,12 @@ RUN docker-php-ext-install \
 # add composer
 RUN php -r "readfile('https://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer
 
+# set max memory_limit: 128M
+RUN echo "memory_limit=128M" >> "$PHP_INI_DIR/php.ini"
+
+# set max_execution_time: 30s
+RUN echo "max_execution_time=30" >> "$PHP_INI_DIR/php.ini"
+
 # add rights for nette dirs
 RUN mkdir /var/www/app /var/www/app/temp /var/www/app/log
 RUN chmod -R 777 /var/www/app/temp /var/www/app/log
