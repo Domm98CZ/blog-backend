@@ -15,7 +15,13 @@ final class Bootstrap
         $configurator->enableTracy(__DIR__ . '/../log');
         $configurator->setTimeZone('Europe/Prague');
         $configurator->setTempDirectory(__DIR__ . '/../temp');
-        $configurator->addStaticParameters(['env' => $_ENV]);
+        $configurator->addDynamicParameters([
+            'env'                   => $_ENV
+            , 'DATABASE_HOST'       => getenv('DATABASE_HOST')
+            , 'DATABASE_USER'       => getenv('DATABASE_USER')
+            , 'DATABASE_PASSWORD'   => getenv('DATABASE_PASSWORD')
+            , 'DATABASE_NAME'       => getenv('DATABASE_NAME')
+        ]);
 
         $configurator->createRobotLoader()
             ->addDirectory(__DIR__)
@@ -29,6 +35,10 @@ final class Bootstrap
             ->addConfig(__DIR__ . '/../config/main.neon')
             ->addConfig(__DIR__ . '/../config/services.neon')
         ;
+
+        foreach (glob(__DIR__ . '/../config/extension/*.neon') as $file) {
+            $configurator->addConfig($file);
+        }
 
         return $configurator;
     }

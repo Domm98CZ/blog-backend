@@ -1,8 +1,29 @@
 services:
     app:
-        build: resources/docker
+        build:
+            context: .
+            dockerfile: resources/docker/Dockerfile
         container_name: backend
+        env_file: .env
         ports:
             - 8080:80
         volumes:
             - .:/var/www/app
+
+    database:
+        image: library/postgres:17.4-alpine
+        container_name: postgresql
+        env_file: .env
+        ports:
+            - 5432:5432
+        environment:
+            - DATABASE_HOST=127.0.0.1
+            - POSTGRES_DB=blog_database
+            - POSTGRES_USER=backend
+            - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+            - PGDATA=/var/lib/postgresql/data/pgdata
+
+networks:
+    default:
+        external: true
+        name: backend_with_database

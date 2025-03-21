@@ -16,3 +16,10 @@ php:
 	memory_limit: 128M
 	max_execution_time: 30
 	set_time_limit: 30
+
+database:
+	dsn: 'pgsql:host=%DATABASE_HOST%;dbname=%DATABASE_NAME%'
+	user: %DATABASE_USER%
+	password: %DATABASE_PASSWORD%
+	options:
+		lazy: true
