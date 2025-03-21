@@ -1,0 +1,4 @@
+services:
+	router: App\Core\RouterFactory::createRouter()
+
+search:

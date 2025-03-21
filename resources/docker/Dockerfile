@@ -2,7 +2,6 @@ FROM php:8.4-apache-bookworm
 
 # update debian & get required packages
 RUN apt-get update && apt-get install -y \
-    git \
     unzip \
     p7zip-full \
     libzip-dev \

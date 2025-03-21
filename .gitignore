@@ -2,3 +2,4 @@
 vendor
 log/*
 temp/*
+config/local.neon
