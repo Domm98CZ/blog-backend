@@ -7,8 +7,8 @@ use App\Data\User\User;
 use Nextras\Dbal\Utils\DateTimeImmutable;
 
 /**
- * @property int                $id {primary}
- * @property User               $user {m:1 User::$tokens}
+ * @property int                $id             {primary}
+ * @property User               $user           {m:1 User::$tokens}
  * @property string             $token
  * @property bool               $is_revoked
  * @property UserRole           $role

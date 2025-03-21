@@ -25,6 +25,7 @@ final class HomePresenter extends Presenter
         $u = $this->orm->userRepository->getById(1);
         bdump($u->articles->toCollection()->fetchAll());
         bdump($u->tokens->toCollection()->fetchAll());
+        bdump($u);
         bdump($u->role);
     }
 

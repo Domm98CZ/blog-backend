@@ -7,10 +7,10 @@ use App\Data\User\User;
 use Nextras\Dbal\Utils\DateTimeImmutable;
 
 /**
- * @property int                $id {primary}
+ * @property int                $id             {primary}
  * @property string             $title
  * @property string             $content
- * @property User               $author      {m:1 User::$articles}
+ * @property User               $author         {m:1 User::$articles}
  * @property UserRole           $role
  * @property DateTimeImmutable  $created_at
  * @property DateTimeImmutable  $updated_at
