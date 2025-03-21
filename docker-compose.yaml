@@ -1,10 +1,8 @@
-version: '3.9'
-
 services:
-  app:
-    build: resources/docker
-    container_name: backend
-    ports:
-      - 8080:80
-    volumes:
-      - .:/var/www/app
+    app:
+        build: resources/docker
+        container_name: backend
+        ports:
+            - 8080:80
+        volumes:
+            - .:/var/www/app
