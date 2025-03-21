@@ -33,3 +33,12 @@ select
 where not exists(
     select id from articles where title = 'Phasellus pharetra vestibulum ex, a dignissim urna pretium at' and author_id = (select id from users where email = 'author@domm.cz')
 );
+
+insert into auth_tokens (user_id, token, expires_at)
+select
+    (select id from users where email = 'admin@domm.cz')
+    , 'T35T0V4C1T0K3N'
+    , (select current_timestamp + interval '1 hour')
+where not exists(
+    select id from auth_tokens where user_id = (select id from users where email = 'admin@domm.cz')
+);

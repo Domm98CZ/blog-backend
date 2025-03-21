@@ -3,7 +3,7 @@ extensions:
 
 migrations:
 	dir: %appDir%/../resources/migrations
-	driver: mysql
+	driver: pgsql
 	dbal: nette
 	withDummyData: %debugMode%
 	groups:

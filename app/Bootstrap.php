@@ -16,8 +16,11 @@ final class Bootstrap
         $configurator->setTimeZone('Europe/Prague');
         $configurator->setTempDirectory(__DIR__ . '/../temp');
         $configurator->addDynamicParameters([
-            'env' => $_ENV
-            , 'DATABASE_PASSWORD' => getenv('DATABASE_PASSWORD')
+            'env'                   => $_ENV
+            , 'DATABASE_HOST'       => getenv('DATABASE_HOST')
+            , 'DATABASE_USER'       => getenv('DATABASE_USER')
+            , 'DATABASE_PASSWORD'   => getenv('DATABASE_PASSWORD')
+            , 'DATABASE_NAME'       => getenv('DATABASE_NAME')
         ]);
 
         $configurator->createRobotLoader()

@@ -1,3 +1,5 @@
+SET NAMES 'utf8';
+
 CREATE OR REPLACE FUNCTION update_modified_column()
     RETURNS TRIGGER AS $$
 BEGIN
@@ -5,6 +7,12 @@ BEGIN
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
+
+ALTER DATABASE blog_database SET search_path TO public;
+ALTER DATABASE blog_database SET timezone TO 'Europe/Prague';
+
+SET search_path TO public;
+SET timezone TO 'Europe/Prague';
 
 DROP TYPE IF EXISTS user_role CASCADE;
 CREATE TYPE user_role AS ENUM ('admin', 'author', 'reader');
