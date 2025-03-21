@@ -4,9 +4,9 @@ namespace App\Presentation\Front\Error\Error4xx;
 use Nette;
 use Nette\Application\Attributes\Requires;
 
-
 /**
  * Handles 4xx HTTP error responses.
+ ** Basic nette Error4xxPresenter, without any modifications. **
  */
 #[Requires(methods: '*', forward: true)]
 final class Error4xxPresenter extends Nette\Application\UI\Presenter

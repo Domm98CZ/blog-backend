@@ -1,5 +1,5 @@
 <?php declare(strict_types=1);
-namespace app;
+namespace App;
 
 use Nette\Bootstrap\Configurator;
 
