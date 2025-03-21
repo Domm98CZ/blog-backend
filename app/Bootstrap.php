@@ -33,6 +33,10 @@ final class Bootstrap
             ->addConfig(__DIR__ . '/../config/services.neon')
         ;
 
+        foreach (glob(__DIR__ . '/../config/extension/*.neon') as $file) {
+            $configurator->addConfig($file);
+        }
+
         return $configurator;
     }
 }

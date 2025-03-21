@@ -1,0 +1,21 @@
+extensions:
+	migrations: Nextras\Migrations\Bridges\NetteDI\MigrationsExtension
+
+migrations:
+	dir: %appDir%/../resources/migrations
+	driver: mysql
+	dbal: nette
+	withDummyData: %debugMode%
+	groups:
+		structures:
+			enabled: true
+			directory: %appDir%/../resources/migrations/structures
+		basic-data:
+			enabled: true
+			directory: %appDir%/../resources/migrations/basic-data
+			dependencies: ['structures']
+		dummy-data:
+			enabled: %debugMode%
+			directory: %appDir%/../resources/migrations/dummy-data
+			dependencies: ['structures', 'basic-data']
+
