@@ -16,3 +16,10 @@ php:
 	memory_limit: 128M
 	max_execution_time: 30
 	set_time_limit: 30
+
+database:
+	dsn: 'pgsql:host=postgresql;dbname=blog_database'
+	user: backend
+	password: %DATABASE_PASSWORD%
+	options:
+		lazy: true

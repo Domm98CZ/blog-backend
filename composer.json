@@ -10,7 +10,9 @@
         "nette/http": "^3.3",
         "nette/utils": "^4.0",
         "nette/neon": "^3.4",
-        "latte/latte": "^3.0"
+        "latte/latte": "^3.0",
+        "nextras/orm": "^5.0",
+        "nette/database": "^3.2"
     },
     "autoload": {
         "psr-4": {

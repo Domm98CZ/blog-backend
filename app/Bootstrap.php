@@ -15,7 +15,10 @@ final class Bootstrap
         $configurator->enableTracy(__DIR__ . '/../log');
         $configurator->setTimeZone('Europe/Prague');
         $configurator->setTempDirectory(__DIR__ . '/../temp');
-        $configurator->addStaticParameters(['env' => $_ENV]);
+        $configurator->addDynamicParameters([
+            'env' => $_ENV
+            , 'DATABASE_PASSWORD' => getenv('DATABASE_PASSWORD')
+        ]);
 
         $configurator->createRobotLoader()
             ->addDirectory(__DIR__)
