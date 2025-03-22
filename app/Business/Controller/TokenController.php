@@ -2,7 +2,6 @@
 
 namespace App\Business\Controller;
 
-use App\Business\Exception\BusinessException;
 use App\Business\Exception\EntityWasNotCreatedException;
 use App\Business\Exception\EntityWasNotFoundException;
 use App\Data\DataModel;

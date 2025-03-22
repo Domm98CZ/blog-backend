@@ -16,7 +16,6 @@ use App\Business\Interface\RestApiEntity;
 use App\Business\Security\UserAccessControl;
 use App\Data\AbstractEntity;
 use App\Data\DataModel;
-use App\Data\RestApiDto\Request\AbstractRequestDto;
 use App\Data\RestApiDto\Response\ResponseUserDto;
 use App\Data\User\User;
 use App\Data\User\UserRepository;
