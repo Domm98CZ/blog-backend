@@ -11,7 +11,6 @@ use Nextras\Dbal\Utils\DateTimeImmutable;
  * @property User               $user           {m:1 User::$tokens}
  * @property string             $token
  * @property bool               $is_revoked
- * @property UserRole           $role
  * @property DateTimeImmutable  $created_at
  * @property DateTimeImmutable  $updated_at
  * @property DateTimeImmutable  $last_used_at
@@ -19,5 +18,8 @@ use Nextras\Dbal\Utils\DateTimeImmutable;
  */
 final class Token extends AbstractEntity
 {
-
+    public function isValid(): bool
+    {
+        return $this->expires_at >= new DateTimeImmutable() && !$this->is_revoked;
+    }
 }

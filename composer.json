@@ -11,10 +11,13 @@
         "nette/http": "^3.3",
         "nette/utils": "^4.0",
         "nette/neon": "^3.4",
+        "nette/security": "^3.2",
         "latte/latte": "^3.0",
         "nextras/orm": "^5.0",
         "nextras/migrations": "^3.4",
-        "contributte/console": "^0.10.1"
+        "contributte/console": "^0.10.1",
+        "contributte/apitte": "^0.12.3",
+        "contributte/di": "^0.5.6"
     },
     "autoload": {
         "psr-4": {

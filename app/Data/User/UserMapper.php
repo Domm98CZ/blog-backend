@@ -2,6 +2,7 @@
 namespace App\Data\User;
 
 use App\Data\AbstractMapper;
+use Nextras\Orm\Collection\ICollection;
 use Nextras\Orm\Mapper\Dbal\Conventions\IConventions;
 
 final class UserMapper extends AbstractMapper

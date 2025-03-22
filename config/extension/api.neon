@@ -1,0 +1,41 @@
+extensions:
+	api: Apitte\Core\DI\ApiExtension
+	middlewares: Contributte\Middlewares\DI\MiddlewaresExtension
+	resource: Contributte\DI\Extension\ResourceExtension
+
+resource:
+	resources:
+		App\Presentation\Api\:
+			paths: [%appDir%/Presentation/Api]
+
+api:
+	debug: %debugMode%
+	catchException: %productionMode%
+	plugins:
+		Apitte\Core\DI\Plugin\CoreMappingPlugin:
+		Apitte\Core\DI\Plugin\CoreDecoratorPlugin:
+		Apitte\Negotiation\DI\NegotiationPlugin:
+			unification: false
+		Apitte\Middlewares\DI\MiddlewaresPlugin:
+			tracy: %debugMode%
+			autobasepath: true
+		Apitte\Debug\DI\DebugPlugin:
+			debug:
+				panel: %debugMode%
+				negotiation: %debugMode%
+		Apitte\OpenApi\DI\OpenApiPlugin:
+			swaggerUi:
+				panel: true
+			definition:
+				info:
+					title: "Rest API Specification"
+					version: "1.0.0"
+					description: 'API Base path is `/api/` and it is authorized via temporary Bearer token after login.'
+
+services:
+    middleware.cors:
+        factory: App\Presentation\Api\Middlewares\CorsMiddleware
+        tags: [middleware: [priority: 200]]
+    middleware.authenticator:
+        factory: App\Presentation\Api\Middlewares\AuthenticationMiddleware
+        tags: [middleware: [priority: 250]]
