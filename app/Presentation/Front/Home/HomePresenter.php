@@ -1,32 +1,31 @@
 <?php declare(strict_types=1);
 namespace App\Presentation\Front\Home;
 
-use App\Data\DataModel;
-use App\Data\User\User;
+use App\Business\Controller\TokenController;
+use App\Business\Controller\UserController;
 use Nette\Application\UI\Presenter;
-use Nette\Database\Connection;
 use Nette\DI\Attributes\Inject;
 
 final class HomePresenter extends Presenter
 {
     #[Inject]
-    public Connection $database;
+    public UserController $userController;
 
     #[Inject]
-    public DataModel $orm;
+    public TokenController $tokenController;
 
     public function actionDefault(): void
     {
-        // @TODO: remove this test after db connection start working
-        bdump($this->database->query('select current_timestamp'));
-        bdump($this->database->query('select * from users')->fetchAll());
+        //@TODO: remove this debug playground before deadline
+//        $user = $this->userController->registerUser('domm98cz@gmail.com', 'ahoj123', 'Dominik Procházka');
+        $user = $this->userController->loginUser('domm98cz@gmail.com', 'ahoj123');
+        bdump($user);
 
-        /** @var User $u */
-        $u = $this->orm->userRepository->getById(1);
-        bdump($u->articles->toCollection()->fetchAll());
-        bdump($u->tokens->toCollection()->fetchAll());
-        bdump($u);
-        bdump($u->role);
+//        $token = $this->tokenController->createToken($user);
+//        bdump($token);
+//
+//        $xxx = $this->userController->authorizeUser('ZG9tbTk4Y3pAZ21haWwuY29tOmFob2oxMjM');
+//        bdump($xxx);
     }
 
     public function renderDefault(): void
