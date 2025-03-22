@@ -318,14 +318,4 @@ final readonly class UserController extends AbstractController implements RestAp
             $articlesDto
         );
     }
-
-    /**
-     * @param AbstractEntity $entity
-     * @param AbstractRequestDto $requestDto
-     * @return AbstractEntity
-     */
-    public static function modifyEntityWithRequestDto(AbstractEntity $entity, AbstractRequestDto $requestDto): AbstractEntity
-    {
-        // TODO: Implement modifyEntityWithRequestDto() method.
-    }
 }
