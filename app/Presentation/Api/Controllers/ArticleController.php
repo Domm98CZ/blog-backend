@@ -19,25 +19,26 @@ use App\Business\Exception\EntityWasNotDeletedException;
 use App\Business\Exception\EntityWasNotFoundException;
 use App\Business\Exception\EntityWasNotUpdatedException;
 use App\Business\Exception\InsufficientPermissionsException;
+use App\Data\RestApiDto\Request\RequestArticleDto;
 use App\Data\RestApiDto\Request\RequestUserDto;
 use App\Data\RestApiDto\Request\RequestUserWithoutPasswordDto;
-use App\Data\RestApiDto\Response\ResponseUserDto;
+use App\Data\RestApiDto\Response\ResponseArticleDto;
 use App\Data\User\User;
 use App\Presentation\Api\RequestAttributes;
 use Nette\Http\IRequest;
 use Throwable;
 
-#[Path('/users')]
-#[Tag('Users')]
-final class UserController extends BaseController
+#[Path('/articles')]
+#[Tag('Articles')]
+final class ArticleController extends BaseController
 {
     public function __construct(
-        private readonly \App\Business\Controller\UserController $userController,
+        private readonly \App\Business\Controller\ArticleController $articleController,
     ) {
     }
 
     #[OpenApi('
-        summary: Get list of all users accounts in database.
+        summary: Get list of all articles in database.
     ')]
     #[Path('/')]
     #[Method(IRequest::Get)]
@@ -51,12 +52,12 @@ final class UserController extends BaseController
     public function list(ApiRequest $request, ApiResponse $response): ApiResponse
     {
         try {
-            $collection = $this->userController->getUsers($request->getAttribute(RequestAttributes::USER_ENTITY));
+            $collection = $this->articleController->getArticles($request->getAttribute(RequestAttributes::USER_ENTITY));
             $list = [];
 
             /** @var User $entity */
             foreach ($collection as $entity) {
-                $list[$entity->id] = \App\Business\Controller\UserController::createResponseDtoByEntity($entity);
+                $list[$entity->id] = \App\Business\Controller\ArticleController::createResponseDtoByEntity($entity);
             }
 
             return $this->successEntityCollection($response, $list);
@@ -68,13 +69,13 @@ final class UserController extends BaseController
     }
 
     #[OpenApi('
-        summary: Get detailed view of existing single user account.
+        summary: Get detailed view of existing single article.
     ')]
     #[Path('/{id}')]
     #[RequestParameter('id', 'int', EndpointParameter::IN_PATH, true, false, true, 'User account ID')]
     #[Method(IRequest::Get)]
     #[Negotiation('json', true)]
-    #[Response('Success - json', '200', ResponseUserDto::class)]
+    #[Response('Success - json', '200', ResponseArticleDto::class)]
     #[Response('Bad request', '400')]
     #[Response('Unauthorized', '401')]
     #[Response('Not found', '404')]
@@ -85,8 +86,8 @@ final class UserController extends BaseController
         try {
             return $this->successEntity(
                 $response,
-                \App\Business\Controller\UserController::createResponseDtoByEntity(
-                    $this->userController->getUser($request->getAttribute(RequestAttributes::USER_ENTITY), intval($request->getParameter('id')))
+                \App\Business\Controller\ArticleController::createResponseDtoByEntity(
+                    $this->articleController->getArticle($request->getAttribute(RequestAttributes::USER_ENTITY), intval($request->getParameter('id')))
                     , true
                 )
             );
@@ -98,13 +99,13 @@ final class UserController extends BaseController
     }
 
     #[OpenApi('
-        summary: Create new user account.
+        summary: Create new article..
     ')]
     #[Path('/')]
     #[Method(IRequest::Post)]
-    #[RequestBody('UserEntityDto creation DTO.', RequestUserDto::class, true, true)]
+    #[RequestBody('ArticleEntityDto creation DTO.', RequestArticleDto::class, true, true)]
     #[Negotiation('json', true)]
-    #[Response('Success - json', '200', ResponseUserDto::class)]
+    #[Response('Success - json', '200', ResponseArticleDto::class)]
     #[Response('Bad request', '400')]
     #[Response('Unauthorized', '401')]
     #[Response('Not found', '404')]
@@ -113,17 +114,15 @@ final class UserController extends BaseController
     public function create(ApiRequest $request, ApiResponse $response): ApiResponse
     {
         try {
-            /** @var RequestUserDto $dto */
+            /** @var RequestArticleDto $dto */
             $dto = $request->getEntity();
-            $entity = $this->userController->creteUser(
+            $entity = $this->articleController->creteArticle(
                 $request->getAttribute(RequestAttributes::USER_ENTITY),
-                $dto->email,
-                $dto->password,
-                $dto->name,
-                UserRole::from($dto->role),
+                $dto->title,
+                $dto->content
             );
 
-            return $this->successEntity($response, \App\Business\Controller\UserController::createResponseDtoByEntity($entity));
+            return $this->successEntity($response, \App\Business\Controller\ArticleController::createResponseDtoByEntity($entity));
         } catch (InsufficientPermissionsException|EntityWasNotCreatedException $exception) {
             return $this->failed($response, $exception->getMessage());
         } catch (Throwable $exception) {
@@ -132,11 +131,11 @@ final class UserController extends BaseController
     }
 
     #[OpenApi('
-        summary: Update existing user account.
+        summary: Update existing article.
     ')]
     #[Path('/{id}')]
-    #[RequestParameter('id', 'int', EndpointParameter::IN_PATH, true, false, true, 'User account ID')]
-    #[RequestBody('UserEntityDto update DTO.', RequestUserWithoutPasswordDto::class, true, true)]
+    #[RequestParameter('id', 'int', EndpointParameter::IN_PATH, true, false, true, 'Article ID')]
+    #[RequestBody('ArticleEntityDto update DTO.', RequestArticleDto::class, true, true)]
     #[Method(IRequest::Put)]
     #[Negotiation('json', true)]
     #[Response('Success - json', '200')]
@@ -148,18 +147,17 @@ final class UserController extends BaseController
     public function update(ApiRequest $request, ApiResponse $response): ApiResponse
     {
         try {
-            /** @var RequestUserDto $dto */
+            /** @var RequestArticleDto $dto */
             $dto = $request->getEntity();
 
-            $entity = $this->userController->updateUser(
+            $entity = $this->articleController->updateArticle(
                 $request->getAttribute(RequestAttributes::USER_ENTITY),
                 intval($request->getParameter('id')),
-                $dto->email,
-                $dto->name,
-                UserRole::from($dto->role)
+                $dto->title,
+                $dto->content,
             );
 
-            return $this->successEntity($response, \App\Business\Controller\UserController::createResponseDtoByEntity($entity));
+            return $this->successEntity($response, \App\Business\Controller\ArticleController::createResponseDtoByEntity($entity));
         } catch (InsufficientPermissionsException|EntityWasNotFoundException|EntityWasNotUpdatedException $exception) {
             return $this->failed($response, $exception->getMessage());
         } catch (Throwable $exception) {
@@ -168,7 +166,7 @@ final class UserController extends BaseController
     }
 
     #[OpenApi('
-        summary: Permanently delete existing user.
+        summary: Permanently delete existing article.
     ')]
     #[Path('/{id}')]
     #[RequestParameter('id', 'int', EndpointParameter::IN_PATH, true, false, true, 'User account ID')]
@@ -184,15 +182,15 @@ final class UserController extends BaseController
     {
         try {
             $id = intval($request->getParameter('id'));
-            $result = $this->userController->deleteUser(
+            $result = $this->articleController->deleteArticle(
                 $request->getAttribute(RequestAttributes::USER_ENTITY),
                 $id
             );
 
             if ($result) {
-                return $this->success($response, sprintf('UserEntity with id "%d" was removed.', $id));
+                return $this->success($response, sprintf('ArticleEntity with id "%d" was removed.', $id));
             } else {
-                return $this->failed($response, sprintf('UserEntity with id "%d" was not removed.', $id));
+                return $this->failed($response, sprintf('ArticleEntity with id "%d" was not removed.', $id));
             }
         } catch (InsufficientPermissionsException|EntityWasNotFoundException|EntityWasNotDeletedException $exception) {
             return $this->failed($response, $exception->getMessage());

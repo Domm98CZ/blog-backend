@@ -2,20 +2,15 @@
 namespace App\Presentation\Api\Controllers;
 
 use Apitte\Core\Annotation\Controller\Path;
-use Apitte\Core\Annotation\Controller\Tag;
 use Apitte\Core\Http\ApiResponse;
 use Apitte\Core\UI\Controller\IController;
 use Apitte\Negotiation\Http\ArrayEntity;
 use App\Data\RestApiDto\Response\AbstractResponseDto;
-use Exception;
 use Nette\Utils\DateTime;
-use Nette\Utils\Json;
-use Nette\Utils\JsonException;
 use Throwable;
 use Tracy\Debugger;
 
 #[Path('/api')]
-#[Tag('API')]
 abstract class BaseController implements IController
 {
     public const float apiVersion = 1.0;

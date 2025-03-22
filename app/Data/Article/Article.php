@@ -11,7 +11,6 @@ use Nextras\Dbal\Utils\DateTimeImmutable;
  * @property string             $title
  * @property string             $content
  * @property User               $author         {m:1 User::$articles}
- * @property UserRole           $role
  * @property DateTimeImmutable  $created_at
  * @property DateTimeImmutable  $updated_at
  */

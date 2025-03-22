@@ -17,7 +17,6 @@ use App\Business\Security\UserAccessControl;
 use App\Data\AbstractEntity;
 use App\Data\DataModel;
 use App\Data\RestApiDto\Request\AbstractRequestDto;
-use App\Data\RestApiDto\Response\AbstractResponseDto;
 use App\Data\RestApiDto\Response\ResponseUserDto;
 use App\Data\User\User;
 use App\Data\User\UserRepository;
@@ -68,7 +67,7 @@ final readonly class UserController extends AbstractController implements RestAp
             $userEntity = $this->userRepository->findByEmail($email);
             //@TODO: response with token
             if (!$userEntity instanceof User) {
-                throw new EntityAlreadyExists(sprintf('User with email "%s" already exists', $email));
+                throw new EntityAlreadyExists(sprintf('UserEntity with email "%s" already exists', $email));
             }
 
             if (!new Passwords()->verify($password, $userEntity->password_hash)) {
@@ -152,7 +151,7 @@ final readonly class UserController extends AbstractController implements RestAp
     {
         try {
             if ($this->userRepository->findByEmail($email) instanceof User) {
-                throw new EntityAlreadyExists(sprintf('User with email "%s" already exists', $email));
+                throw new EntityAlreadyExists(sprintf('UserEntity with email "%s" already exists', $email));
             }
 
             $userEntity = new User();
@@ -190,7 +189,7 @@ final readonly class UserController extends AbstractController implements RestAp
 
             $userEntity = $this->userRepository->findById($id);
             if (!$userEntity instanceof User) {
-                throw new EntityWasNotFoundException(sprintf('User with id "%s" does not exist.', $id));
+                throw new EntityWasNotFoundException(sprintf('UserEntity with id "%s" does not exist.', $id));
             }
 
             if ($email !== null && !$this->userRepository->findByEmail($email) instanceof User) {
@@ -305,7 +304,7 @@ final readonly class UserController extends AbstractController implements RestAp
 
         if ($loadRelations) {
             foreach ($entity->articles as $article) {
-//                $articlesDto[$article->id] = ::createResponseDtoByEntity($article, $loadRelations);
+                $articlesDto[$article->id] = ArticleController::createResponseDtoByEntity($article, false);
             }
         }
 
