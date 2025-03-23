@@ -2,52 +2,52 @@
 namespace App\Business\Security;
 
 use App\Business\Enum\UserRole;
-use App\Data\User\User;
+use App\Business\Interface\UserInterface;
 
 final readonly class UserAccessControl extends AbstractAccessControl
 {
     /**
-     * @param User $currentUser
+     * @param UserInterface $currentUser
      * @return bool
      */
-    public static function canReadUser(User $currentUser): bool
+    public static function canReadUser(UserInterface $currentUser): bool
     {
-        return $currentUser->role === UserRole::ADMIN;
+        return $currentUser->getRole() === UserRole::ADMIN;
     }
 
     /**
-     * @param User $currentUser
+     * @param UserInterface $currentUser
      * @return bool
      */
-    public static function canReadUsers(User $currentUser): bool
+    public static function canReadUsers(UserInterface $currentUser): bool
     {
-        return $currentUser->role === UserRole::ADMIN;
+        return $currentUser->getRole() === UserRole::ADMIN;
     }
 
     /**
-     * @param User $currentUser
+     * @param UserInterface $currentUser
      * @return bool
      */
-    public static function canCreateUser(User $currentUser): bool
+    public static function canCreateUser(UserInterface $currentUser): bool
     {
-        return $currentUser->role === UserRole::ADMIN;
+        return $currentUser->getRole() === UserRole::ADMIN;
     }
 
     /**
-     * @param User $currentUser
+     * @param UserInterface $currentUser
      * @return bool
      */
-    public static function canUpdateUser(User $currentUser): bool
+    public static function canUpdateUser(UserInterface $currentUser): bool
     {
-        return $currentUser->role === UserRole::ADMIN;
+        return $currentUser->getRole() === UserRole::ADMIN;
     }
 
     /**
-     * @param User $currentUser
+     * @param UserInterface $currentUser
      * @return bool
      */
-    public static function canDeleteUser(User $currentUser): bool
+    public static function canDeleteUser(UserInterface $currentUser): bool
     {
-        return $currentUser->role === UserRole::ADMIN;
+        return $currentUser->getRole() === UserRole::ADMIN;
     }
 }

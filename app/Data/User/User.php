@@ -2,6 +2,9 @@
 namespace App\Data\User;
 
 use App\Business\Enum\UserRole;
+use App\Business\Interface\EntityInterface;
+use App\Business\Interface\RoleInterface;
+use App\Business\Interface\UserInterface;
 use App\Data\AbstractEntity;
 use App\Data\Article\Article;
 use App\Data\Token\Token;
@@ -19,7 +22,15 @@ use Nextras\Orm\Relationships\OneHasMany;
  * @property DateTimeImmutable      $created_at
  * @property DateTimeImmutable      $updated_at
  */
-final class User extends AbstractEntity
+class User extends AbstractEntity implements UserInterface
 {
+    public function getRole(): UserRole
+    {
+        return $this->role;
+    }
 
+    public function getId(): int
+    {
+        return $this->id;
+    }
 }
