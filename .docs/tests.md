@@ -37,6 +37,10 @@ This will automatically discover and execute all PHPUnit test cases.
 
 - Ensure you are running tests in an isolated environment to avoid modifying real data.
 
+## Demo/Testing data
+
+- You can find information about demo/testing data in this file [Demo/Testing data](.docs/demo.md).
+
 ---
 
 _For more details, check out the documentation files in `.docs/`._
