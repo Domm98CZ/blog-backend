@@ -2,50 +2,50 @@
 namespace App\Business\Security;
 
 use App\Business\Enum\UserRole;
-use App\Data\Article\Article;
-use App\Data\User\User;
+use App\Business\Interface\ArticleInterface;
+use App\Business\Interface\UserInterface;
 
 final readonly class ArticleAccessControl extends AbstractAccessControl
 {
     /**
-     * @param User $currentUser
+     * @param UserInterface $currentUser
      * @return bool
      */
-    public static function canReadArticle(User $currentUser): bool
+    public static function canReadArticle(UserInterface $currentUser): bool
     {
         return true;
     }
 
     /**
-     * @param User $currentUser
+     * @param UserInterface $currentUser
      * @return bool
      */
-    public static function canReadArticles(User $currentUser): bool
+    public static function canReadArticles(UserInterface $currentUser): bool
     {
         return true;
     }
 
     /**
-     * @param User $currentUser
+     * @param UserInterface $currentUser
      * @return bool
      */
-    public static function canCreateArticle(User $currentUser): bool
+    public static function canCreateArticle(UserInterface $currentUser): bool
     {
-        return in_array($currentUser->role, [UserRole::ADMIN, UserRole::AUTHOR], true);
+        return in_array($currentUser->getRole(), [UserRole::ADMIN, UserRole::AUTHOR], true);
     }
 
     /**
-     * @param User $currentUser
-     * @param Article $articleEntity
+     * @param UserInterface $currentUser
+     * @param ArticleInterface $articleEntity
      * @return bool
      */
-    public static function canUpdateArticle(User $currentUser, Article $articleEntity): bool
+    public static function canUpdateArticle(UserInterface $currentUser, ArticleInterface $articleEntity): bool
     {
-        if ($currentUser->role === UserRole::AUTHOR && $articleEntity->author->id === $currentUser->id) {
+        if ($currentUser->getRole() === UserRole::AUTHOR && $articleEntity->getAuthorId() === $currentUser->getId()) {
             return true;
         }
 
-        if ($currentUser->role === UserRole::ADMIN) {
+        if ($currentUser->getRole() === UserRole::ADMIN) {
             return true;
         }
 
@@ -53,19 +53,20 @@ final readonly class ArticleAccessControl extends AbstractAccessControl
     }
 
     /**
-     * @param User $currentUser
-     * @param Article $articleEntity
+     * @param UserInterface $currentUser
+     * @param ArticleInterface $articleEntity
      * @return bool
      */
-    public static function canDeleteArticle(User $currentUser, Article $articleEntity): bool
+    public static function canDeleteArticle(UserInterface $currentUser, ArticleInterface $articleEntity): bool
     {
-        if ($currentUser->role === UserRole::AUTHOR && $articleEntity->author->id === $currentUser->id) {
+        if ($currentUser->getRole() === UserRole::AUTHOR && $articleEntity->getAuthorId() === $currentUser->getId()) {
             return true;
         }
 
-        if ($currentUser->role === UserRole::ADMIN) {
+        if ($currentUser->getRole() === UserRole::ADMIN) {
             return true;
         }
 
-        return false;    }
+        return false;
+    }
 }

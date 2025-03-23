@@ -21,7 +21,7 @@ use Nextras\Dbal\Utils\DateTimeImmutable;
 use Nextras\Orm\Collection\ICollection;
 use Tracy\Debugger;
 
-final readonly class ArticleController extends AbstractController implements RestApiEntity
+readonly class ArticleController extends AbstractController implements RestApiEntity
 {
     private ArticleRepository $articleRepository;
 
@@ -135,7 +135,7 @@ final readonly class ArticleController extends AbstractController implements Res
     /**
      * @param User $currentUser
      * @param int $id
-     * @return User
+     * @return Article
      * @throws Exception
      */
     public function getArticle(User $currentUser, int $id): Article
