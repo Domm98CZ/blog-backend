@@ -7,7 +7,7 @@ Welcome to **Block backend**, a web application built using the [Nette Framework
 The full documentation is available in the `.docs` directory. Below are the key sections:
 
 - [Installation Guide](.docs/install.md) – How to set up and configure the project.
-- [Testing](.docs/test.md) – Running tests and ensuring code quality.
+- [Testing](.docs/tests.md) – Running tests and ensuring code quality.
 - [API Reference](.docs/api.md) – Documentation for the project's API endpoints.
 - [Configuration](.docs/config.md) – Information about environment settings and configuration options.
 - [Demo/Testing data](.docs/demo.md) – Information about demo/testing data.
