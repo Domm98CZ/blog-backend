@@ -1,0 +1,7 @@
+.idea
+vendor
+log/*
+temp/*
+config/local.neon
+.env
+.phpunit.result.cache

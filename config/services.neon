@@ -1,0 +1,22 @@
+services:
+	router: App\Core\RouterFactory::createRouter()
+
+search:
+	controllers:
+		in: %appDir%/Business/Controller
+		classes:
+			- *Controller
+	data:
+		in: %appDir%/Data
+		classes:
+			- *Model
+			- *Manager
+			- *Repository
+	restApi:
+		in: %appDir%/Presentation/Api/Controllers
+		exclude:
+			classes:
+				- BaseController
+		classes:
+			- *Controller
+

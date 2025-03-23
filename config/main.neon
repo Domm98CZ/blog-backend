@@ -1,0 +1,25 @@
+application:
+	errorPresenter:
+		4xx: Error4xx
+		5xx: Error5xx
+	catchExceptions: %productionMode%
+	mapping: App\Presentation\*\**Presenter
+
+http:
+	frames: true
+
+latte:
+	strictTypes: yes
+
+php:
+	date.timezone: Europe/Prague
+	memory_limit: 128M
+	max_execution_time: 30
+	set_time_limit: 30
+
+database:
+	dsn: 'pgsql:host=%DATABASE_HOST%;dbname=%DATABASE_NAME%'
+	user: %DATABASE_USER%
+	password: %DATABASE_PASSWORD%
+	options:
+		lazy: true
